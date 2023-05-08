@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class Poolable : MonoBehaviour
 {
-    Coroutine timerCor;
+    private Coroutine _timerCor;
     private bool _isUsing;
     public bool IsUsing
     {
@@ -11,20 +11,25 @@ public class Poolable : MonoBehaviour
         set
         {
             _isUsing = value;
-            if (!_isUsing && timerCor != null)
+            if (!_isUsing && _timerCor != null)
             {
-                StopCoroutine(timerCor);
+                StopCoroutine(_timerCor);
             }
         }
     }
     ///<summary>잠시 후 오브젝트를 끄고 Pool로 Push하는 역할</summary>
     public void Timer(float timer)
     {
-        timerCor = StartCoroutine(TimerCor(timer));
+        _timerCor = StartCoroutine(TimerCor(timer));
     }
     IEnumerator TimerCor(float timer)
     {
         yield return Util.WaitGet(timer);
+        Managers.Resource.Destroy(this.gameObject);
+    }
+
+    public void Destroy()
+    {
         Managers.Resource.Destroy(this.gameObject);
     }
 }

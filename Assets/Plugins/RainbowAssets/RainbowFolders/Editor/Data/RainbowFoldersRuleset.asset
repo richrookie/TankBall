@@ -549,7 +549,7 @@ MonoBehaviour:
     SmallIcon: {fileID: 0}
     LargeIcon: {fileID: 0}
     IsIconRecursive: 0
-    BackgroundType: 60
+    BackgroundType: 0
     BackgroundTexture: {fileID: 0}
     IsBackgroundRecursive: 0
     IsHidden: 0
@@ -557,11 +557,11 @@ MonoBehaviour:
     Key: Assets/07Sounds
     Ordinal: 45
     Priority: 0
-    IconType: 70
+    IconType: 80
     SmallIcon: {fileID: 0}
     LargeIcon: {fileID: 0}
-    IsIconRecursive: 0
-    BackgroundType: 70
+    IsIconRecursive: 1
+    BackgroundType: 80
     BackgroundTexture: {fileID: 0}
     IsBackgroundRecursive: 0
     IsHidden: 0
@@ -569,11 +569,11 @@ MonoBehaviour:
     Key: Assets/10Assets
     Ordinal: 46
     Priority: 0
-    IconType: 80
+    IconType: 240
     SmallIcon: {fileID: 0}
     LargeIcon: {fileID: 0}
     IsIconRecursive: 0
-    BackgroundType: 80
+    BackgroundType: 240
     BackgroundTexture: {fileID: 0}
     IsBackgroundRecursive: 0
     IsHidden: 0
@@ -581,11 +581,23 @@ MonoBehaviour:
     Key: Assets/08Effects
     Ordinal: 47
     Priority: 0
-    IconType: 100
+    IconType: 90
+    SmallIcon: {fileID: 0}
+    LargeIcon: {fileID: 0}
+    IsIconRecursive: 1
+    BackgroundType: 90
+    BackgroundTexture: {fileID: 0}
+    IsBackgroundRecursive: 0
+    IsHidden: 0
+  - Type: 1
+    Key: Assets/07Effects
+    Ordinal: 48
+    Priority: 0
+    IconType: 70
     SmallIcon: {fileID: 0}
     LargeIcon: {fileID: 0}
     IsIconRecursive: 0
-    BackgroundType: 100
+    BackgroundType: 70
     BackgroundTexture: {fileID: 0}
     IsBackgroundRecursive: 0
     IsHidden: 0

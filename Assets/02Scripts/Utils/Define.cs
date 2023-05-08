@@ -1,31 +1,21 @@
 ﻿public class Define
 {
-    public enum eGameState
+    public enum eGameState : byte
     {
         Ready,
         Play,
         End,
     }
 
-    public enum eJoyStickMethod
-    {
-        DoNotUse,
-        Fixed,
-        Follow,
-    }
-
-    public enum eAnimState
-    {
-        Idle,
-        Run,
-        Timeback,
-        Death
-    }
-
-    public enum eSound
+    public enum eSound : byte
     {
         Bgm,
-        BunkerShoot,
         MaxCount
+    }
+
+    public enum eBlockType : byte
+    {
+        Pingpong,
+        None
     }
 }

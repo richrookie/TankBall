@@ -36,17 +36,19 @@ public class DataManager
     private bool _useSound;
 
 
-    private int _monsterNum = 0;
-    public int MonsterNum
+    private int _stageNum = 1;
+    private int _maxStageNum = 1;
+    public int StageNum
     {
-        get => _monsterNum;
+        get => _stageNum;
         set
         {
-            _monsterNum = value;
-            if (_monsterNum > 3)
-                _monsterNum = 1;
+            _stageNum = value;
 
-            ES3.Save<int>("MonsterNum", value);
+            if (_stageNum > _maxStageNum)
+                _stageNum = _maxStageNum;
+
+            ES3.Save<int>("StageNum", _stageNum);
         }
     }
 
@@ -59,6 +61,6 @@ public class DataManager
     {
         UseHaptic = ES3.Load<bool>("Haptic", true);
         UseSound = ES3.Load<bool>("Sound", true);
-        MonsterNum = ES3.Load<int>("MonsterNum", 1);
+        StageNum = ES3.Load<int>("StageNum", 1);
     }
 }
