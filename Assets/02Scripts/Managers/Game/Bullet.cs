@@ -79,7 +79,6 @@ public class Bullet : MonoBehaviour
         if (other.gameObject.layer == LayerMask.NameToLayer("Boundary"))
         {
             _dir = Vector2.Reflect(_lastVelocity.normalized, other.contacts[0].normal);
-            // _rigid2D.velocity = _dir * _speed;
         }
     }
 

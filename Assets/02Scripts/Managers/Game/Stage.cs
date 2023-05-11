@@ -37,9 +37,4 @@ public class Stage : MonoBehaviour
             c.Init();
         }
     }
-
-    public void CheckWin()
-    {
-
-    }
 }
