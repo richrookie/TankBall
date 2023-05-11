@@ -1,6 +1,5 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
 
 
 [RequireComponent(typeof(CircleCollider2D))]
@@ -14,14 +13,23 @@ public class Ball : MonoBehaviour
         private set { _number = value; }
     }
 
+    private TextMeshProUGUI _ballText = null;
+    public GameObject BallText
+    {
+        get => _ballText.gameObject;
+    }
 
-    public void Init()
+
+    public void Init(TextMeshProUGUI text)
     {
         _number = 1;
+        _ballText = text;
+        _ballText.text = Number.ToString();
     }
 
     public void IncreaseNumber(int value)
     {
         Number = value;
+        _ballText.text = Number.ToString();
     }
 }

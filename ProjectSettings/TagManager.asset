@@ -15,9 +15,9 @@ TagManager:
   - Grid
   - Block
   - Ball
-  - 
-  - 
-  - 
+  - Touch
+  - Bullet
+  - Boundary
   - 
   - 
   - 

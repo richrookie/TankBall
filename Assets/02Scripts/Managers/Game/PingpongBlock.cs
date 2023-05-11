@@ -1,14 +1,9 @@
 using UnityEngine;
 
+[RequireComponent(typeof(BoxCollider2D))]
+[RequireComponent(typeof(Rigidbody2D))]
 public class PingpongBlock : Block
 {
-    public enum ePingpongType
-    {
-        Plus,
-        Muliply,
-        None
-    }
-
     public enum eMoveDirection
     {
         x,
@@ -16,7 +11,7 @@ public class PingpongBlock : Block
         None
     }
 
-    public ePingpongType _pingpongType = ePingpongType.None;
+    public Define.ePingpongType _pingpongType = Define.ePingpongType.None;
     public eMoveDirection _moveDirectionType = eMoveDirection.None;
     public int _value = 1;
     public bool _isMoving = false;
@@ -26,7 +21,7 @@ public class PingpongBlock : Block
     private float _startPos = 0f;
     private float _endPos = 0f;
     private float _speed = 3f;
-    private Rigidbody2D _rigid = null;
+    private Rigidbody2D _rigid2D = null;
 
 
     public override void Init()
@@ -36,18 +31,28 @@ public class PingpongBlock : Block
 
         switch (_pingpongType)
         {
-            case ePingpongType.Plus:
+            case Define.ePingpongType.Plus:
                 this.GetComponent<SpriteRenderer>().sprite = Managers.Resource.Load<Sprite>("PlusBlock");
                 break;
 
-            case ePingpongType.Muliply:
+            case Define.ePingpongType.Muliply:
                 this.GetComponent<SpriteRenderer>().sprite = Managers.Resource.Load<Sprite>("MultiplyBlock");
                 break;
         }
 
+        if (_rigid2D == null)
+        {
+            _rigid2D = this.GetComponent<Rigidbody2D>();
+            _rigid2D.simulated = true;
+            _rigid2D.mass = 1f;
+            _rigid2D.drag = 0f;
+            _rigid2D.angularDrag = 0f;
+            _rigid2D.gravityScale = 0f;
+            _rigid2D.constraints = RigidbodyConstraints2D.FreezeAll;
+        }
+
         if (_isMoving)
         {
-            _rigid = Util.GetOrAddComponent<Rigidbody2D>(this.gameObject);
 
             switch (_moveDirectionType)
             {
@@ -57,10 +62,12 @@ public class PingpongBlock : Block
                     else
                         _plusDir = false;
 
-                    _rigid.constraints = RigidbodyConstraints2D.FreezePositionY | RigidbodyConstraints2D.FreezeRotation;
+                    _rigid2D.constraints = RigidbodyConstraints2D.FreezePositionY | RigidbodyConstraints2D.FreezeRotation;
 
                     _startPos = this.transform.position.x;
                     _endPos = -this.transform.position.x;
+
+                    _rigid2D.constraints = RigidbodyConstraints2D.FreezePositionY | RigidbodyConstraints2D.FreezeRotation;
                     break;
 
                 case eMoveDirection.y:
@@ -71,30 +78,47 @@ public class PingpongBlock : Block
 
     private void FixedUpdate()
     {
-        if (_isMoving)
+        if (Managers.Game.GameStatePlay)
         {
-            switch (_moveDirectionType)
+            if (_isMoving)
             {
-                case eMoveDirection.x:
-                    if (_plusDir)
-                    {
-                        if (this.transform.position.x < _endPos)
-                            _rigid.velocity = Vector2.right * _speed;
+                switch (_moveDirectionType)
+                {
+                    case eMoveDirection.x:
+                        if (_plusDir)
+                        {
+                            if (this.transform.position.x < _endPos)
+                                _rigid2D.velocity = Vector2.right * _speed;
+                            else
+                                _plusDir = false;
+                        }
                         else
-                            _plusDir = false;
-                    }
-                    else
-                    {
-                        if (this.transform.position.x > _startPos)
-                            _rigid.velocity = Vector2.left * _speed;
-                        else
-                            _plusDir = true;
-                    }
-                    break;
+                        {
+                            if (this.transform.position.x > _startPos)
+                                _rigid2D.velocity = Vector2.left * _speed;
+                            else
+                                _plusDir = true;
+                        }
+                        break;
 
-                case eMoveDirection.y:
-                    break;
+                    case eMoveDirection.y:
+                        break;
+                }
             }
+        }
+    }
+
+
+    public void Reset()
+    {
+        switch (_moveDirectionType)
+        {
+            case eMoveDirection.x:
+                this.transform.position = new Vector3(_startPos, this.transform.position.y, 0);
+                break;
+
+            case eMoveDirection.y:
+                break;
         }
     }
 
@@ -109,11 +133,11 @@ public class PingpongBlock : Block
 
             switch (_pingpongType)
             {
-                case ePingpongType.Plus:
+                case Define.ePingpongType.Plus:
                     ball.IncreaseNumber(ball.Number + _value);
                     break;
 
-                case ePingpongType.Muliply:
+                case Define.ePingpongType.Muliply:
                     ball.IncreaseNumber(ball.Number * _value);
                     break;
             }

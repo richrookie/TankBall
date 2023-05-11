@@ -42,5 +42,5 @@ public abstract class UI_Base : MonoBehaviour
     protected Text GetText(Enum idx) => Get<Text>(idx);
     protected Button GetButton(Enum idx) => Get<Button>(idx);
     protected Image GetImage(Enum idx) => Get<Image>(idx);
-    protected TextMeshProUGUI GetTMProUGUI(Enum idx) { return Get<TextMeshProUGUI>(idx); }
+    protected TextMeshProUGUI GetTextMesh(Enum idx) { return Get<TextMeshProUGUI>(idx); }
 }

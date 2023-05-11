@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class Goal : MonoBehaviour
@@ -8,7 +6,8 @@ public class Goal : MonoBehaviour
     {
         if (other.gameObject.layer == LayerMask.NameToLayer("Ball"))
         {
-            other?.GetComponent<Poolable>().Destroy();
+            Ball ball = other.GetComponent<Ball>();
+            Managers.Game.uiGameScene.BallReset(ball.gameObject, ball.BallText);
 
             GameObject effect = Managers.Resource.Instantiate("Effect_Goal");
             effect.transform.position = other.transform.position;

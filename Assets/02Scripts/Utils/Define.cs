@@ -18,4 +18,17 @@
         Pingpong,
         None
     }
+
+    public enum eColorType : byte
+    {
+        Red,
+        Blue
+    }
+
+    public enum ePingpongType : byte
+    {
+        Plus,
+        Muliply,
+        None
+    }
 }
