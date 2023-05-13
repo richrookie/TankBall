@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 public class UI_GameScene : UI_Scene
 {
@@ -13,10 +14,10 @@ public class UI_GameScene : UI_Scene
         TMP_ShootCount
     }
 
-    private List<GameObject> _ballList = new List<GameObject>();
-    private List<GameObject> _TMPBallList = new List<GameObject>();
-    private List<Block> _blockList = new List<Block>();
-    private List<GameObject> _TMPValueList = new List<GameObject>();
+    private List<GameObject> _ballList = new List<GameObject>(64);
+    private List<GameObject> _TMPBallList = new List<GameObject>(64);
+    private List<Block> _blockList = new List<Block>(4);
+    private List<GameObject> _TMPValueList = new List<GameObject>(64);
 
     private readonly float _xBoundary = 5f;
     private readonly Vector3 _leftCornerVec = new Vector3(-5f, 1.25f, 0);
@@ -127,7 +128,7 @@ public class UI_GameScene : UI_Scene
         {
             hit.transform.GetComponent<SpriteRenderer>().enabled = true;
 
-            await System.Threading.Tasks.Task.Delay(100);
+            await Task.Delay(100);
 
             hit.transform.GetComponent<SpriteRenderer>().enabled = false;
         }
