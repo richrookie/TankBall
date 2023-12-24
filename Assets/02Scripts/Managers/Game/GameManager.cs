@@ -30,16 +30,12 @@ public class GameManager : MonoBehaviour
 
     public void Init()
     {
-        // ES3.DeleteFile();
-
         GameReady();
-
-        _cureGameState = Define.eGameState.Ready;
     }
 
     private void CheckNull()
     {
-        if (_uiGameScene == null) _uiGameScene = FindObjectOfType<UI_GameScene>() as UI_GameScene;
+        _uiGameScene = FindObjectOfType<UI_GameScene>() as UI_GameScene;
     }
 
     public void GameReady()
@@ -47,8 +43,10 @@ public class GameManager : MonoBehaviour
         CheckNull();
         StageInit();
 
-        if (_playerCannon == null) _playerCannon = GameObject.FindGameObjectWithTag("Player")?.GetComponent<Cannon>();
-        if (_enemyCannon == null) _enemyCannon = GameObject.FindGameObjectWithTag("Enemy")?.GetComponent<Cannon>();
+        _playerCannon = GameObject.FindGameObjectWithTag("Player")?.GetComponent<Cannon>();
+        _enemyCannon = GameObject.FindGameObjectWithTag("Enemy")?.GetComponent<Cannon>();
+
+        _cureGameState = Define.eGameState.Ready;
     }
 
     public void GamePlay()
@@ -58,19 +56,18 @@ public class GameManager : MonoBehaviour
 
     public void GameEnd()
     {
-
+        _cureGameState = Define.eGameState.End;
     }
 
     private void StageInit()
     {
-        int stageNum = 1;
-
-        _curStage = Managers.Resource.Instantiate($"Stage{stageNum.ToString("D2")}")?.GetComponent<Stage>();
+        _curStage = Managers.Resource.Instantiate("Stage")?.GetComponent<Stage>();
         _curStage.transform.localPosition = Vector3.zero;
         _curStage.transform.localRotation = Quaternion.identity;
         _curStage.Init();
     }
-    public void NextStage()
+
+    public void Clear()
     {
         if (_curStage != null)
         {
@@ -78,13 +75,6 @@ public class GameManager : MonoBehaviour
             _curStage = null;
         }
 
-        // Managers.Data.StageNum += 1;
-
-        StageInit();
-    }
-
-    public void Clear()
-    {
-
+        GameReady();
     }
 }

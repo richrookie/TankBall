@@ -9,6 +9,12 @@ public class UI_GameScene : UI_Scene
         Button_GameStart
     }
 
+    public enum GameObjects
+    {
+        Lobby,
+        CubeInfo
+    }
+
     public enum TextMeshs
     {
         TMP_ShootCount
@@ -30,12 +36,13 @@ public class UI_GameScene : UI_Scene
     private void Awake()
     {
         Bind<UnityEngine.UI.Button>(typeof(Buttons));
+        Bind<GameObject>(typeof(GameObjects));
         Bind<TMPro.TextMeshProUGUI>(typeof(TextMeshs));
 
         base.Init();
 
         GameReady();
-        SetButton();
+        ButtonInit();
     }
 
     private void GameReady()
@@ -58,22 +65,26 @@ public class UI_GameScene : UI_Scene
         _layerTouch = 1 << LayerMask.NameToLayer("Touch");
 
         SetBlockValue();
+
+        GetObject(GameObjects.Lobby).SetActive(true);
     }
-    private void SetButton()
+
+    private void ButtonInit()
     {
         GetButton(Buttons.Button_GameStart).onClick.AddListener(() =>
         {
-            GetButton(Buttons.Button_GameStart).gameObject.SetActive(false);
+            GetObject(GameObjects.Lobby).SetActive(false);
             Managers.Game.GamePlay();
         });
     }
+
     private void SetBlockValue()
     {
         PingpongBlock[] pingpongBlock = FindObjectsOfType<PingpongBlock>();
 
         foreach (PingpongBlock p in pingpongBlock)
         {
-            GameObject TMP_PingPongValue = Managers.Resource.Instantiate("TMP_PingPongValue", this.transform);
+            GameObject TMP_PingPongValue = Managers.Resource.Instantiate("TMP_PingPongValue", GetObject(GameObjects.CubeInfo).transform);
             TMP_PingPongValue.transform.position = p.transform.position;
             TMP_PingPongValue.transform.rotation = Quaternion.identity;
             TMP_PingPongValue.transform.localScale = new Vector3(1, 1, 1);
@@ -191,12 +202,15 @@ public class UI_GameScene : UI_Scene
     #endregion
 
 
+
     public void Clear()
     {
+        GetObject(GameObjects.Lobby).SetActive(true);
+
+        Managers.Clear();
         _ballList.Clear();
         _TMPBallList.Clear();
         _blockList.Clear();
         _TMPValueList.Clear();
-
     }
 }

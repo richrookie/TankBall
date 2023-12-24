@@ -37,6 +37,14 @@ public class Cannon : MonoBehaviour
             else if (_cannonLaunchPad.eulerAngles.z > 235)
                 _dir = -1;
         }
+        else
+        {
+            if (_corFire != null)
+            {
+                StopCoroutine(_corFire);
+                _corFire = null;
+            }
+        }
     }
 
     private Coroutine _corFire = null;

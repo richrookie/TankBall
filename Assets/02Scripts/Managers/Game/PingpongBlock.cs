@@ -53,7 +53,6 @@ public class PingpongBlock : Block
 
         if (_isMoving)
         {
-
             switch (_moveDirectionType)
             {
                 case eMoveDirection.x:
@@ -105,6 +104,10 @@ public class PingpongBlock : Block
                         break;
                 }
             }
+        }
+        else
+        {
+            _rigid2D.velocity = Vector2.zero;
         }
     }
 

@@ -72,6 +72,10 @@ public class Bullet : MonoBehaviour
 
             _lastVelocity = _rigid2D.velocity;
         }
+        else
+        {
+            this?.GetComponent<Poolable>().Destroy();
+        }
     }
 
     private void OnCollisionEnter2D(Collision2D other)
@@ -87,8 +91,13 @@ public class Bullet : MonoBehaviour
         if (other.gameObject.layer == LayerMask.NameToLayer("Grid"))
         {
             bool isTrue = other.GetComponent<Grid>().CheckOccupation(_colorType);
+
             if (isTrue)
+            {
+                Managers.Game.CurStage.SetGridCount(_colorType);
+
                 this?.GetComponent<Poolable>().Destroy();
+            }
         }
     }
 }

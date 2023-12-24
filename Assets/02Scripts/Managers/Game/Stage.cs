@@ -3,7 +3,12 @@ using UnityEngine;
 public class Stage : MonoBehaviour
 {
     private int _redGridCount = 0;
+    public int RedGridCount => _redGridCount;
     private int _blueGridCount = 0;
+    public int BlueGridCount => _blueGridCount;
+
+    public bool RedTeamWin => _blueGridCount <= 0;
+    public bool BlueTeamWin => _redGridCount <= 0;
 
     public void Init()
     {
@@ -35,6 +40,28 @@ public class Stage : MonoBehaviour
         foreach (Cannon c in cannon)
         {
             c.Init();
+        }
+    }
+
+    public void SetGridCount(Define.eColorType colorType)
+    {
+        switch (colorType)
+        {
+            case Define.eColorType.Red:
+                _redGridCount += 1;
+                _blueGridCount -= 1;
+
+                if (RedTeamWin)
+                    Managers.Resource.Instantiate("UI_PopupVictory", Managers.Game.uiGameScene.transform);
+                break;
+
+            case Define.eColorType.Blue:
+                _redGridCount -= 1;
+                _blueGridCount += 1;
+
+                if (BlueTeamWin)
+                    Managers.Resource.Instantiate("UI_PopupDefeat", Managers.Game.uiGameScene.transform);
+                break;
         }
     }
 }
