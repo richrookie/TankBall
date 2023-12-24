@@ -33,7 +33,7 @@ public class SoundManager
 
     public void Play(string path, Define.eSound type, float volume = 1.0f)
     {
-        if (!Managers.Data.UseSound) return;
+        // if (!Managers.Data.UseSound) return;
 
         AudioClip audioClip = GetOrAddAudioClip(path, type);
         Play(audioClip, type, volume);
@@ -41,7 +41,7 @@ public class SoundManager
 
     private void Play(AudioClip audioClip, Define.eSound type, float volume = 1.0f)
     {
-        if (!Managers.Data.UseSound) return;
+        // if (!Managers.Data.UseSound) return;
 
         if (audioClip == null)
             return;

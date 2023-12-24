@@ -30,7 +30,7 @@ public class GameManager : MonoBehaviour
 
     public void Init()
     {
-        ES3.DeleteFile();
+        // ES3.DeleteFile();
 
         GameReady();
 
@@ -63,7 +63,7 @@ public class GameManager : MonoBehaviour
 
     private void StageInit()
     {
-        int stageNum = Managers.Data.StageNum;
+        int stageNum = 1;
 
         _curStage = Managers.Resource.Instantiate($"Stage{stageNum.ToString("D2")}")?.GetComponent<Stage>();
         _curStage.transform.localPosition = Vector3.zero;
@@ -78,7 +78,7 @@ public class GameManager : MonoBehaviour
             _curStage = null;
         }
 
-        Managers.Data.StageNum += 1;
+        // Managers.Data.StageNum += 1;
 
         StageInit();
     }
