@@ -41,6 +41,9 @@
 ### 1. 공 생성 관련
 > - 터치한 곳에 공 생성 및 초기화  <br>
 > [코드 보러가기](https://github.com/richrookie/TankBall/blob/df0e9dde39a176c4e80d32585ac197ca01adc070/Assets/02Scripts/UI/UI_GameScene.cs#L110)<br>
+### 2. 총알 발사 관련
+> - 공이 골라인에 진입 시 공에 적혀있던 해당 숫자만큼 캐논에서 발사 <br>
+> [코드 보러가기](https://github.com/richrookie/TankBall/blob/eadac224c2e6315ad55322445781c25b362f5ecd/Assets/02Scripts/Managers/Game/Cannon.cs#L67)
 
 <br>
 
