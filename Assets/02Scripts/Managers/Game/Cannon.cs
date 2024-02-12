@@ -4,24 +4,28 @@ using UnityEngine;
 public class Cannon : MonoBehaviour
 {
     public Define.eColorType _cannonColorType;
-    private bool _isAi = false;
-    private Transform _cannonLaunchPad = null;
+    private bool IsAi = false;
+    private Transform _launchTf = null;
     private int _dir = 1;
     private float _speed = 50f;
+
+    private float _timeCheck = 0f;
+    private float _timeRange = 3.0f;
 
 
     public void Init()
     {
-        _cannonLaunchPad = this.transform.GetChild(0).transform;
+        _launchTf = Util.FindChild<Transform>(this.gameObject, "Root");
 
         switch (_cannonColorType)
         {
             case Define.eColorType.Red:
-                _isAi = false;
+                IsAi = false;
                 break;
 
             case Define.eColorType.Blue:
-                _isAi = true;
+                IsAi = true;
+                _timeRange = 3.0f;
                 break;
         }
     }
@@ -30,11 +34,23 @@ public class Cannon : MonoBehaviour
     {
         if (Managers.Game.GameStatePlay)
         {
-            _cannonLaunchPad.Rotate(Vector3.forward * _dir * _speed * Time.deltaTime);
+            _launchTf.Rotate(Vector3.forward * Time.deltaTime * _dir * _speed);
 
-            if (_cannonLaunchPad.eulerAngles.z < 125)
+            if (IsAi)
+            {
+                _timeCheck += Time.deltaTime;
+
+                if (_timeCheck > _timeRange)
+                {
+                    _timeCheck = 0f;
+                    _timeRange = Random.Range(3, 7);
+                    Managers.Game.EnemyCannon.Fire();
+                }
+            }
+
+            if (_launchTf.eulerAngles.z < 125)
                 _dir = 1;
-            else if (_cannonLaunchPad.eulerAngles.z > 235)
+            else if (_launchTf.eulerAngles.z > 235)
                 _dir = -1;
         }
         else
@@ -56,16 +72,13 @@ public class Cannon : MonoBehaviour
             _corFire = null;
         }
 
-        if (!_isAi)
-            Managers.Game.EnemyCannon.Fire();
-
         _corFire = StartCoroutine(CorFire());
     }
 
     private IEnumerator CorFire()
     {
         int shootCount = 0;
-        if (_isAi)
+        if (IsAi)
             shootCount = Random.Range(10, 35);
         else
             shootCount = Managers.Game.uiGameScene.ShootCount;
@@ -73,14 +86,14 @@ public class Cannon : MonoBehaviour
         for (int i = shootCount; i > 0; i--)
         {
             GameObject bullet = Managers.Resource.Instantiate("Bullet");
-            bullet.transform.position = _cannonLaunchPad.position;
-            float z = _cannonLaunchPad.eulerAngles.z - 180;
-            bullet.transform.eulerAngles = new Vector3(_cannonLaunchPad.eulerAngles.x,
-                                                        _cannonLaunchPad.eulerAngles.y,
+            bullet.transform.position = _launchTf.position;
+            float z = _launchTf.eulerAngles.z - 180;
+            bullet.transform.eulerAngles = new Vector3(_launchTf.eulerAngles.x,
+                                                        _launchTf.eulerAngles.y,
                                                         z);
             bullet?.GetComponent<Bullet>().Init(_cannonColorType);
 
-            if (!_isAi)
+            if (!IsAi)
                 Managers.Game.uiGameScene.SetShootCount(-1);
 
             yield return Util.WaitGet(.06f);

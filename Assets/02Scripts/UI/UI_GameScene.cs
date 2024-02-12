@@ -15,9 +15,9 @@ public class UI_GameScene : UI_Scene
         CubeInfo
     }
 
-    public enum TextMeshs
+    public enum Texts
     {
-        TMP_ShootCount
+        Text_ShootCount
     }
 
     private List<GameObject> _ballList = new List<GameObject>(64);
@@ -32,7 +32,7 @@ public class UI_GameScene : UI_Scene
     {
         Bind<UnityEngine.UI.Button>(typeof(Buttons));
         Bind<GameObject>(typeof(GameObjects));
-        Bind<TMPro.TextMeshProUGUI>(typeof(TextMeshs));
+        Bind<UnityEngine.UI.Text>(typeof(Texts));
 
         base.Init();
 
@@ -195,7 +195,7 @@ public class UI_GameScene : UI_Scene
     public void SetShootCount(int ballCount)
     {
         _shootCount += ballCount;
-        GetTextMesh(TextMeshs.TMP_ShootCount).text = _shootCount.ToString();
+        GetText(Texts.Text_ShootCount).text = _shootCount.ToString();
     }
     #endregion
 
