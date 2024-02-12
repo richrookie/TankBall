@@ -13,14 +13,14 @@ public class Ball : MonoBehaviour
         private set { _number = value; }
     }
 
-    private TextMeshProUGUI _ballText = null;
+    private UnityEngine.UI.Text _ballText = null;
     public GameObject BallText
     {
         get => _ballText.gameObject;
     }
 
 
-    public void Init(TextMeshProUGUI text)
+    public void Init(UnityEngine.UI.Text text)
     {
         _number = 1;
         _ballText = text;
