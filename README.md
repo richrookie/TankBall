@@ -40,7 +40,7 @@
 
 ### 1. 공 생성 관련
 > - 터치한 곳에 공 생성 및 초기화  <br>
-> [코드 보러가기](https://github.com/richrookie/TankBall/blob/d968316a412f24defb6076a15297e60be00c66df/Assets/02Scripts/UI/UI_GameScene.cs#L117)<br>
+> [코드 보러가기](https://github.com/richrookie/TankBall/blob/df0e9dde39a176c4e80d32585ac197ca01adc070/Assets/02Scripts/UI/UI_GameScene.cs#L110)<br>
 
 <br>
 
